@@ -1,3 +1,6 @@
+import { useAnalyticalSolutionGraph } from "@/hooks/useAnalyticalSolutionGraph";
+import { useMergeTwoGraphsByField } from "@/hooks/useMergeTwoGraphsByField";
+import { useSchemaSolutionGraph } from "@/hooks/useSchemaSolutionGraph";
 import {
   selectBigK,
   selectI,
@@ -24,45 +27,45 @@ import {
 const data = [
   {
     name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
+    r: 4000,
+    "Явная схема": 2400,
+    "Аналитическое решение": 2400,
   },
   {
     name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
+    r: 3000,
+    "Явная схема": 1398,
+    "Аналитическое решение": 2210,
   },
   {
     name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
+    r: 2000,
+    "Явная схема": 9800,
+    "Аналитическое решение": 2290,
   },
   {
     name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
+    r: 2780,
+    "Явная схема": 3908,
+    "Аналитическое решение": 2000,
   },
   {
     name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
+    r: 1890,
+    "Явная схема": 4800,
+    "Аналитическое решение": 2181,
   },
   {
     name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
+    r: 2390,
+    "Явная схема": 3800,
+    "Аналитическое решение": 2500,
   },
   {
     name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    r: 3490,
+    "Явная схема": 4300,
+    "Аналитическое решение": 2100,
   },
 ];
 
@@ -72,27 +75,34 @@ export const Graph = () => {
   const I = useSelector(selectI);
   const k = useSelector(selectK);
 
-  const [isSSR, setIsSSR] = useState(true);
+  const analyticalSolutionGraph = useAnalyticalSolutionGraph();
+  const { schemaSolutionGraph, SCHEMA_LABEL } = useSchemaSolutionGraph({
+    schemaName,
+    I,
+    K,
+    k,
+  });
 
+  const mergedGraph = useMergeTwoGraphsByField(
+    "r",
+    analyticalSolutionGraph,
+    schemaSolutionGraph
+  );
+
+  console.log(schemaSolutionGraph);
+  const [isSSR, setIsSSR] = useState(true);
   useEffect(() => {
     setIsSSR(false);
   }, []);
 
   return (
-    <div
-      style={
-        {
-          // backgroundColor: "gray",
-        }
-      }
-    >
-      {/* FIRST GRAPH */}
+    <div>
       {!isSSR && (
-        <LineChart syncId="anyId" width={1200} height={600} data={data}>
+        <LineChart syncId="anyId" width={1200} height={600} data={mergedGraph}>
           <CartesianGrid stroke="#ccc" strokeDasharray="2 2"></CartesianGrid>
           <XAxis
             tick={{ fill: "#FFFFFF" }}
-            dataKey="uv"
+            dataKey="r"
             style={{
               fontSize: 18,
             }}
@@ -125,11 +135,28 @@ export const Graph = () => {
             }}
           ></Legend>
 
+          {/* Line (график) аналитического решения */}
           <Line
             key="2343r343f34f"
             type="monotone"
-            dataKey="amt"
+            dataKey="Аналитическое решение"
             stroke="red"
+            strokeWidth="3"
+            dot={{ fill: "#2e4355", stroke: "#8884d8", strokeWidth: 2, r: 0 }}
+            activeDot={{
+              fill: "#2e4355",
+              stroke: "#8884d8",
+              strokeWidth: 5,
+              r: 2,
+            }}
+          />
+
+          {/* Line (график) решения с помощью разностной схемы*/}
+          <Line
+            key="23432434"
+            type="monotone"
+            dataKey={`${SCHEMA_LABEL}`}
+            stroke="gray"
             strokeWidth="3"
             dot={{ fill: "#2e4355", stroke: "#8884d8", strokeWidth: 2, r: 0 }}
             activeDot={{
