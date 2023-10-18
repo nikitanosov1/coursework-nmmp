@@ -24,10 +24,10 @@ interface IdefaultValues {
 }
 
 const defaultValues: IdefaultValues = {
-  I: 10,
-  K: 10,
-  k: 9,
-  schemaName: ESchemaName.EXPLICIT,
+  I: 100,
+  K: 100,
+  k: 100,
+  schemaName: ESchemaName.KRANK_NICHOLSON,
 };
 
 export const GraphSettings = () => {
@@ -38,12 +38,11 @@ export const GraphSettings = () => {
     const { name, value } = e.target;
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: Number(value),
     });
   };
 
   const handleCalculateButtonClick = () => {
-    // dispatch(graphSettingsActions.setGraphSettings(formValues));
     dispatch(graphSettingsActions.setSchemaName(formValues.schemaName));
     dispatch(graphSettingsActions.setBigK(formValues.K));
     dispatch(graphSettingsActions.setK(formValues.k));

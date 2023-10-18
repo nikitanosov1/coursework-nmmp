@@ -7,12 +7,9 @@ import {
   selectK,
   selectSchemaName,
 } from "@/redux/features/graphSettings/selector";
-import { ESchemaName } from "@/types/graph";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { ExplicitGraph } from "../ExplicitGraph/ExplicitGraph";
-// import { ImplicitGraph } from "../ImplicitGraph/ImplicitGraph";
-// import { KrankNicholsonGraph } from "../KrankNicholsonGraph/KrankNicholsonGraph";
+
 import {
   CartesianGrid,
   Line,
@@ -75,7 +72,7 @@ export const Graph = () => {
   const I = useSelector(selectI);
   const k = useSelector(selectK);
 
-  const analyticalSolutionGraph = useAnalyticalSolutionGraph();
+  const analyticalSolutionGraph = useAnalyticalSolutionGraph({ I, K, k });
   const { schemaSolutionGraph, SCHEMA_LABEL } = useSchemaSolutionGraph({
     schemaName,
     I,
@@ -89,7 +86,6 @@ export const Graph = () => {
     schemaSolutionGraph
   );
 
-  console.log(schemaSolutionGraph);
   const [isSSR, setIsSSR] = useState(true);
   useEffect(() => {
     setIsSSR(false);
