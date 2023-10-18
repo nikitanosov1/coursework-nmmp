@@ -35,4 +35,16 @@ export class SchemeUtil {
   static h_r = (I: number) => {
     return this.R / I;
   };
+
+  /**
+   * @param I Кол-во дроблений по координате r
+   * @returns Массив r_i
+   */
+  static createRAxis = (I: number) => {
+    const r: number[] = [];
+    for (let i = 0; i < I + 1; ++i) {
+      r.push(this.h_r(I) * i);
+    }
+    return r;
+  };
 }
