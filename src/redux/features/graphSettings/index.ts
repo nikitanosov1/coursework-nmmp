@@ -9,10 +9,10 @@ interface IGraphSettings {
 }
 
 const initialState: IGraphSettings = {
-  I: 0,
-  K: 0,
-  k: 0,
-  schemaName: ESchemaName.EXPLICIT,
+  I: 100,
+  K: 100,
+  k: 100,
+  schemaName: ESchemaName.KRANK_NICHOLSON,
 };
 
 const graphSettingsSlice = createSlice({
