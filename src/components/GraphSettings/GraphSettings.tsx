@@ -24,9 +24,9 @@ interface IdefaultValues {
 }
 
 const defaultValues: IdefaultValues = {
-  I: 0,
-  K: 0,
-  k: 0,
+  I: 10,
+  K: 10,
+  k: 9,
   schemaName: ESchemaName.EXPLICIT,
 };
 
