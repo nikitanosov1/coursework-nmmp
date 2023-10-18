@@ -19,7 +19,9 @@ export const Home = () => {
     >
       <Stack flexDirection="row" justifyContent="space-between" gap={2}>
         <Graph />
-        <GraphSettings />
+        <Stack pt="6px">
+          <GraphSettings />
+        </Stack>
       </Stack>
     </Stack>
   );

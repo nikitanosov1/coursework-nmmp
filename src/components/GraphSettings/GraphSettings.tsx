@@ -60,6 +60,9 @@ export const GraphSettings = () => {
           fullWidth
           value={formValues.I}
           onChange={handleInputChange}
+          InputProps={{
+            inputProps: { min: 0 },
+          }}
         />
         <TextField
           name="K"
@@ -68,6 +71,9 @@ export const GraphSettings = () => {
           fullWidth
           value={formValues.K}
           onChange={handleInputChange}
+          InputProps={{
+            inputProps: { min: 0 },
+          }}
         />
         <TextField
           name="k"
@@ -76,6 +82,9 @@ export const GraphSettings = () => {
           fullWidth
           value={formValues.k}
           onChange={handleInputChange}
+          InputProps={{
+            inputProps: { min: 0 },
+          }}
         />
         <FormLabel>Тип схемы</FormLabel>
         <RadioGroup

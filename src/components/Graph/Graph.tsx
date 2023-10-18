@@ -7,7 +7,10 @@ import {
   selectK,
   selectSchemaName,
 } from "@/redux/features/graphSettings/selector";
+import { selectIsDarkTheme } from "@/redux/features/theme/selector";
+import { Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 
 import {
@@ -18,14 +21,21 @@ import {
   Tooltip,
   YAxis,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
 
 export const Graph = () => {
+  const isDarkTheme = useSelector(selectIsDarkTheme);
   const schemaName = useSelector(selectSchemaName);
   const K = useSelector(selectBigK);
   const I = useSelector(selectI);
   const k = useSelector(selectK);
+  const [isSSR, setIsSSR] = useState(true);
+  useEffect(() => {
+    setIsSSR(false);
+  }, []);
 
+  const labelsColor = isDarkTheme ? "#FFFFFF" : "#11111";
   const analyticalSolutionGraph = useAnalyticalSolutionGraph({ I, K, k });
   const { schemaSolutionGraph, SCHEMA_LABEL } = useSchemaSolutionGraph({
     schemaName,
@@ -40,27 +50,29 @@ export const Graph = () => {
     schemaSolutionGraph
   );
 
-  const [isSSR, setIsSSR] = useState(true);
-  useEffect(() => {
-    setIsSSR(false);
-  }, []);
-
   return (
-    <div>
-      {!isSSR && (
+    <Stack width={1200}>
+      {isSSR ? (
+        <Skeleton
+          width={1200}
+          height={600}
+          baseColor="#202020"
+          highlightColor="#444"
+        />
+      ) : (
         <LineChart syncId="anyId" width={1200} height={600} data={mergedGraph}>
           <CartesianGrid stroke="#ccc" strokeDasharray="2 2"></CartesianGrid>
           <XAxis
-            tick={{ fill: "#FFFFFF" }}
+            tick={{ fill: labelsColor }}
             type="number"
             domain={["dataMin", "dataMax"]}
-            tickCount={40}
+            tickCount={20}
             dataKey="r"
             style={{
               fontSize: 10,
             }}
             label={{
-              fill: "#FFFFFF",
+              fill: labelsColor,
               value: "Радиус r",
               position: "bottom",
               fontSize: 20,
@@ -71,11 +83,11 @@ export const Graph = () => {
             style={{
               fontSize: 18,
             }}
-            tick={{ fill: "#FFFFFF" }}
+            tick={{ fill: labelsColor }}
             width={150}
             label={{
               fontSize: 20,
-              fill: "#FFFFFF",
+              fill: labelsColor,
               value: "Температура U(r, t)",
               angle: -90,
             }}
@@ -121,6 +133,6 @@ export const Graph = () => {
           />
         </LineChart>
       )}
-    </div>
+    </Stack>
   );
 };
