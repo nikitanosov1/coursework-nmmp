@@ -16,7 +16,7 @@ export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
   };
 
   const mu = (r :number) => {
-    return (kT * h_t(K)) / (2 * c * r * Math.pow(h_r(I), 2));
+    return (kT * h_t(K)) / (2 * c * r * h_r(I));
   };
 
   const eps = () => {
@@ -59,7 +59,7 @@ export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
     let r;
     for (let i = 0; i < I + 1; i++) {
       r = h_r(I) * i;
-      f[i] = prev_uK[i] + beta * valI(r) * h_t(K);
+      f[i] = prev_uK[i] + beta * valI(r) * h_t(K) / c;
     }
     return f;
   };
@@ -70,6 +70,7 @@ export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
     const x = new Array(c.length);
     p[0] = b[0] / c[0];
     q[0] = f[0] / c[0];
+    // len(f) = I + 1
     for (let i = 1; i < I; i++) {
       p[i] = b[i] / (c[i] - a[i] * p[i - 1]);
       q[i] = (f[i] - a[i] * q[i - 1]) / (c[i] - a[i] * p[i - 1]);
@@ -78,8 +79,8 @@ export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
     q[I] = (f[i] - a[i] * q[i - 1]) / (c[i] - a[i] * p[i - 1]);
     x[i] = q[i];
     while (i > 0) {
-        i = i - 1;
-        x[i] = q[i] - p[i] * x[i + 1];
+      i = i - 1;
+      x[i] = q[i] - p[i] * x[i + 1];
     }
     return x;
   };
