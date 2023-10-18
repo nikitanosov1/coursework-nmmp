@@ -1,3 +1,5 @@
+import { SchemeUtil } from "@/util/scheme";
+
 interface IProps {
   I: number;
   K: number;
@@ -36,6 +38,8 @@ export const useKrankNicholsonSolutionGraph = ({ I, K, k }: IProps) => {
       [`${SCHEMA_LABEL}`]: 9100,
     },
   ];
+
+  console.log(SchemeUtil.alpha);
 
   return { schemaSolutionGraph, SCHEMA_LABEL };
 };

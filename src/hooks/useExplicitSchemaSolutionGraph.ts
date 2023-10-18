@@ -1,3 +1,5 @@
+import { SchemeUtil } from "@/util/scheme";
+
 interface IProps {
   I: number;
   K: number;
