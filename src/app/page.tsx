@@ -1,25 +1,48 @@
 "use client";
 
-import { useState } from "react";
 import styles from "./page.module.css";
-import { Button, Theme } from "@mui/material";
+import { FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 import { darkTheme, lightTheme } from "@/config/theme";
 import { ThemeProvider } from "@emotion/react";
 import { Home } from "./home/page";
+import { selectIsDarkTheme } from "@/redux/features/theme/selector";
+import { useDispatch, useSelector } from "react-redux";
+import { themeActions } from "@/redux/features/theme";
 
 export default function App() {
-  const [currentTheme, setCurrentTheme] = useState<Theme>(lightTheme);
-
-  const toggleTheme = () => {
-    setCurrentTheme((prevTheme) =>
-      prevTheme === lightTheme ? darkTheme : lightTheme
-    );
-  };
+  const isDarkTheme = useSelector(selectIsDarkTheme);
+  const dispatch = useDispatch();
 
   return (
-    <ThemeProvider theme={currentTheme}>
+    <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
       <Home />
-      <button onClick={toggleTheme}>Toggle Theme</button>
+      <div
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+        }}
+      >
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isDarkTheme}
+                onChange={() => dispatch(themeActions.toggleTheme())}
+              />
+            }
+            label={
+              <Typography
+                sx={(theme) => ({
+                  color: theme.palette.text.primary,
+                })}
+              >
+                Ночной режим
+              </Typography>
+            }
+          />
+        </FormGroup>
+      </div>
     </ThemeProvider>
   );
 }

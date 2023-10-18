@@ -124,7 +124,7 @@ export const useKrankNicholsonSolutionGraph = ({ I, K, k }: IProps) => {
     }
   }
 
-  for (let i = 0; i < I; i++) {
+  for (let i = 0; i < I + 1; i++) {
     schemaSolutionGraph[i][`${SCHEMA_LABEL}`] = u[k][i];
   }
 

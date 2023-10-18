@@ -12,6 +12,7 @@ import {
   RadioGroup,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -47,7 +48,6 @@ export const GraphSettings = () => {
     dispatch(graphSettingsActions.setBigK(formValues.K));
     dispatch(graphSettingsActions.setK(formValues.k));
     dispatch(graphSettingsActions.setI(formValues.I));
-    console.log(formValues);
   };
 
   return (
@@ -87,19 +87,43 @@ export const GraphSettings = () => {
             key="EXPLICIT"
             value={ESchemaName.EXPLICIT}
             control={<Radio size="small" />}
-            label="Явная схема"
+            label={
+              <Typography
+                sx={(theme) => ({
+                  color: theme.palette.text.primary,
+                })}
+              >
+                Явная схема
+              </Typography>
+            }
           />
           <FormControlLabel
             key="IMPLICIT"
             value={ESchemaName.IMPLICIT}
             control={<Radio size="small" />}
-            label="Неявная схема"
+            label={
+              <Typography
+                sx={(theme) => ({
+                  color: theme.palette.text.primary,
+                })}
+              >
+                Неявная схема
+              </Typography>
+            }
           />
           <FormControlLabel
             key="KRANK_NICHOLSON"
             value={ESchemaName.KRANK_NICHOLSON}
             control={<Radio size="small" />}
-            label="Схема Кранка-Николсона"
+            label={
+              <Typography
+                sx={(theme) => ({
+                  color: theme.palette.text.primary,
+                })}
+              >
+                Схема Кранка-Николсона
+              </Typography>
+            }
           />
         </RadioGroup>
       </FormControl>

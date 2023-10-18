@@ -9,13 +9,14 @@ interface IProps {
 export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
   const SCHEMA_LABEL = "Неявная схема";
 
-  const { R, kT, c, alpha, beta, l, u0, h_t, h_r, valI, createRAxis } = SchemeUtil;
+  const { R, kT, c, alpha, beta, l, u0, h_t, h_r, valI, createRAxis } =
+    SchemeUtil;
 
   const gamma = () => {
     return (kT * h_t(K)) / (c * Math.pow(h_r(I), 2));
   };
 
-  const mu = (r :number) => {
+  const mu = (r: number) => {
     return (kT * h_t(K)) / (2 * c * r * h_r(I));
   };
 
@@ -59,7 +60,7 @@ export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
     let r;
     for (let i = 0; i < I + 1; i++) {
       r = h_r(I) * i;
-      f[i] = prev_uK[i] + beta * valI(r) * h_t(K) / c;
+      f[i] = prev_uK[i] + (beta * valI(r) * h_t(K)) / c;
     }
     return f;
   };
@@ -98,7 +99,7 @@ export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
   const A: number[] = generateA();
   const B: number[] = generateB();
   const C: number[] = generateC();
-  
+
   for (let k = 1; k < K + 1; k++) {
     const F = generateF(u[k - 1]);
     u[k] = thomasMethod(A, B, C, F);
@@ -111,12 +112,12 @@ export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
   }
   //t = clock() - t;
 
-  for (let i = 0; i < I; i++) {
+  for (let i = 0; i < I + 1; i++) {
     schemaSolutionGraph[i][`${SCHEMA_LABEL}`] = u[k][i];
   }
 
   return {
     schemaSolutionGraph,
-    SCHEMA_LABEL
+    SCHEMA_LABEL,
   };
 };

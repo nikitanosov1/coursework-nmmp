@@ -11,10 +11,7 @@ export const useMergeTwoGraphsByField = (
     const mergedObject = {
       ...firstGraph[i],
       ...secondGraph[i],
-      [fieldName]: {
-        ...firstGraph[i][fieldName],
-        ...secondGraph[i][fieldName],
-      },
+      [fieldName]: firstGraph[i][fieldName],
     };
 
     mergedGraph.push(mergedObject);

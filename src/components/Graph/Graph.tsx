@@ -18,53 +18,7 @@ import {
   Tooltip,
   YAxis,
   Legend,
-  ResponsiveContainer,
 } from "recharts";
-
-const data = [
-  {
-    name: "Page A",
-    r: 4000,
-    "Явная схема": 2400,
-    "Аналитическое решение": 2400,
-  },
-  {
-    name: "Page B",
-    r: 3000,
-    "Явная схема": 1398,
-    "Аналитическое решение": 2210,
-  },
-  {
-    name: "Page C",
-    r: 2000,
-    "Явная схема": 9800,
-    "Аналитическое решение": 2290,
-  },
-  {
-    name: "Page D",
-    r: 2780,
-    "Явная схема": 3908,
-    "Аналитическое решение": 2000,
-  },
-  {
-    name: "Page E",
-    r: 1890,
-    "Явная схема": 4800,
-    "Аналитическое решение": 2181,
-  },
-  {
-    name: "Page F",
-    r: 2390,
-    "Явная схема": 3800,
-    "Аналитическое решение": 2500,
-  },
-  {
-    name: "Page G",
-    r: 3490,
-    "Явная схема": 4300,
-    "Аналитическое решение": 2100,
-  },
-];
 
 export const Graph = () => {
   const schemaName = useSelector(selectSchemaName);
@@ -98,9 +52,12 @@ export const Graph = () => {
           <CartesianGrid stroke="#ccc" strokeDasharray="2 2"></CartesianGrid>
           <XAxis
             tick={{ fill: "#FFFFFF" }}
+            type="number"
+            domain={["dataMin", "dataMax"]}
+            tickCount={40}
             dataKey="r"
             style={{
-              fontSize: 18,
+              fontSize: 10,
             }}
             label={{
               fill: "#FFFFFF",
@@ -133,7 +90,7 @@ export const Graph = () => {
 
           {/* Line (график) аналитического решения */}
           <Line
-            key="2343r343f34f"
+            key="Аналитическое решение"
             type="monotone"
             dataKey="Аналитическое решение"
             stroke="red"
@@ -149,7 +106,7 @@ export const Graph = () => {
 
           {/* Line (график) решения с помощью разностной схемы*/}
           <Line
-            key="23432434"
+            key={`${SCHEMA_LABEL}`}
             type="monotone"
             dataKey={`${SCHEMA_LABEL}`}
             stroke="gray"
