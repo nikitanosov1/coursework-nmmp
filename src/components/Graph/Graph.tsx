@@ -121,7 +121,7 @@ export const Graph = () => {
             key={`${SCHEMA_LABEL}`}
             type="monotone"
             dataKey={`${SCHEMA_LABEL}`}
-            stroke="gray"
+            stroke="green"
             strokeWidth="3"
             dot={{ fill: "#2e4355", stroke: "#8884d8", strokeWidth: 2, r: 0 }}
             activeDot={{

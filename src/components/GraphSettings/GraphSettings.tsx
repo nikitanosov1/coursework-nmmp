@@ -14,7 +14,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 interface IdefaultValues {
@@ -25,15 +25,27 @@ interface IdefaultValues {
 }
 
 const defaultValues: IdefaultValues = {
-  I: 100,
-  K: 100,
-  k: 100,
+  I: 25,
+  K: 5000,
+  k: 5000,
   schemaName: ESchemaName.KRANK_NICHOLSON,
 };
 
 export const GraphSettings = () => {
   const [formValues, setFormValues] = useState(defaultValues);
   const dispatch = useDispatch();
+  const handleCalculateButtonClick = () => {
+    dispatch(graphSettingsActions.setSchemaName(formValues.schemaName));
+    dispatch(graphSettingsActions.setBigK(formValues.K));
+    dispatch(graphSettingsActions.setK(formValues.k));
+    dispatch(graphSettingsActions.setI(formValues.I));
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      handleCalculateButtonClick();
+    }
+  };
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -43,48 +55,50 @@ export const GraphSettings = () => {
     });
   };
 
-  const handleCalculateButtonClick = () => {
-    dispatch(graphSettingsActions.setSchemaName(formValues.schemaName));
-    dispatch(graphSettingsActions.setBigK(formValues.K));
-    dispatch(graphSettingsActions.setK(formValues.k));
-    dispatch(graphSettingsActions.setI(formValues.I));
-  };
+  const hasError = formValues.I < 1 || formValues.K < 1 || formValues.k < 0;
 
   return (
-    <Stack sx={{ maxWidth: 400 }} flexDirection="column">
+    <Stack
+      sx={{ maxWidth: 400 }}
+      flexDirection="column"
+      onKeyDown={handleKeyDown}
+    >
       <FormControl component="fieldset" sx={{ gap: "10px" }}>
         <TextField
           name="I"
           type="number"
           label="Значение I"
           fullWidth
-          value={formValues.I}
+          value={formValues.I == 0 ? "" : formValues.I}
           onChange={handleInputChange}
           InputProps={{
             inputProps: { min: 0 },
           }}
+          error={formValues.I < 1}
         />
         <TextField
           name="K"
           type="number"
           label="Значение K"
           fullWidth
-          value={formValues.K}
+          value={formValues.K == 0 ? "" : formValues.K}
           onChange={handleInputChange}
           InputProps={{
             inputProps: { min: 0 },
           }}
+          error={formValues.K < 1}
         />
         <TextField
           name="k"
           type="number"
           label="Номер временного слоя"
           fullWidth
-          value={formValues.k}
+          value={formValues.k == 0 ? "" : formValues.k}
           onChange={handleInputChange}
           InputProps={{
             inputProps: { min: 0 },
           }}
+          error={formValues.k < 0}
         />
         <FormLabel>Тип схемы</FormLabel>
         <RadioGroup
@@ -138,21 +152,16 @@ export const GraphSettings = () => {
       </FormControl>
 
       <Button
+        sx={{
+          marginTop: 2,
+        }}
         variant="contained"
         color="primary"
         onClick={handleCalculateButtonClick}
+        disabled={hasError}
       >
         Рассчитать
       </Button>
     </Stack>
-
-    // <section className="">
-    //   <Button variant="contained" color="primary">
-    //     Primary Button
-    //   </Button>
-    //   <Button variant="contained" color="secondary">
-    //     Secondary Button
-    //   </Button>
-    // </section>
   );
 };

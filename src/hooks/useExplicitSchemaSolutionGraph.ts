@@ -50,11 +50,9 @@ export const useExplicitSchemaSolutionGraph = ({
       u[k + 1][i] += u[k][i - 1] * (gamma() - mu(r));
       u[k + 1][i] += (beta * valI(r) * h_t(K)) / c;
     }
-    u[k + 1][I] = u[k + 1][I - 1];
-    // u[k + 1][I] += u[k][I] * (1 - 2 * gamma() - eps());
-    // u[k + 1][I] += u[k][I - 1] * 2 * gamma();
-    // u[k + 1][I] += (beta * valI(R) * h_t(K)) / c;
-    console.log(u[k + 1]);
+    u[k + 1][I] += u[k][I] * (1 - 2 * gamma() - eps());
+    u[k + 1][I] += u[k][I - 1] * 2 * gamma();
+    u[k + 1][I] += (beta * valI(R) * h_t(K)) / c;
   }
   for (let k = 0; k < K + 1; k++) {
     for (let i = 0; i < I + 1; i++) {
@@ -62,12 +60,8 @@ export const useExplicitSchemaSolutionGraph = ({
     }
   }
 
-  console.log(k_layer);
-
   for (let i = 0; i < I + 1; i++) {
     schemaSolutionGraph[i][`${SCHEMA_LABEL}`] = u[k_layer][i];
   }
-  console.log(schemaSolutionGraph);
-
   return { schemaSolutionGraph, SCHEMA_LABEL };
 };

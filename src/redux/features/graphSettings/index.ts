@@ -9,9 +9,9 @@ interface IGraphSettings {
 }
 
 const initialState: IGraphSettings = {
-  I: 100,
-  K: 100,
-  k: 100,
+  I: 25,
+  K: 5000,
+  k: 5000,
   schemaName: ESchemaName.KRANK_NICHOLSON,
 };
 
