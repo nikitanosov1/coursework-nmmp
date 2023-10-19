@@ -6,38 +6,68 @@ interface IProps {
   k: number; // Номер временного слоя
 }
 
-export const useExplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
+export const useExplicitSchemaSolutionGraph = ({
+  I,
+  K,
+  k: k_layer,
+}: IProps) => {
   const SCHEMA_LABEL = "Явная схема";
-  const schemaSolutionGraph = [
-    {
-      r: 4000,
-      [`${SCHEMA_LABEL}`]: 2400,
-    },
-    {
-      r: 3000,
-      [`${SCHEMA_LABEL}`]: 3210,
-    },
-    {
-      r: 2000,
-      [`${SCHEMA_LABEL}`]: 2290,
-    },
-    {
-      r: 2780,
-      [`${SCHEMA_LABEL}`]: 2000,
-    },
-    {
-      r: 1890,
-      [`${SCHEMA_LABEL}`]: 2181,
-    },
-    {
-      r: 2390,
-      [`${SCHEMA_LABEL}`]: 1500,
-    },
-    {
-      r: 3490,
-      [`${SCHEMA_LABEL}`]: 8100,
-    },
-  ];
-  // ЖЕНЯ, ТЕБЕ ТУТ НУЖНО ВОЗВРАЩАТЬ НЕ ЗАХАРДКОЖЕННОЕ schemaSolutionGraph, а считать его по схеме
+  const { R, kT, c, alpha, beta, l, u0, h_t, h_r, valI, createRAxis } =
+    SchemeUtil;
+
+  const mu = (r: number) => {
+    return (kT * h_t(K)) / (2 * c * r * h_r(I));
+  };
+
+  const gamma = () => {
+    return (kT * h_t(K)) / (c * Math.pow(h_r(I), 2));
+  };
+
+  const eps = () => {
+    return (2 * alpha * h_t(K)) / (c * l);
+  };
+
+  // Алгоритм
+  const rAxisArray = createRAxis(I);
+  const schemaSolutionGraph: any = [...rAxisArray].map((r) => ({
+    r,
+  }));
+
+  const u: number[][] = new Array(K + 1)
+    .fill(0)
+    .map(() => new Array(I + 1).fill(0));
+  u[0] = new Array(I + 1).fill(0);
+
+  for (let k = 0; k < K; k++) {
+    u[k + 1] = new Array(I + 1).fill(0);
+    u[k + 1][0] += u[k][0] * (1 - 4 * gamma() - eps());
+    u[k + 1][0] += u[k][1] * 4 * gamma();
+    u[k + 1][0] += (beta * valI(0) * h_t(K)) / c;
+    for (let i = 1; i < I; i++) {
+      const r = h_r(I) * i;
+      u[k + 1][i] += u[k][i + 1] * (gamma() + mu(r));
+      u[k + 1][i] += u[k][i] * (1 - 2 * gamma() - eps());
+      u[k + 1][i] += u[k][i - 1] * (gamma() - mu(r));
+      u[k + 1][i] += (beta * valI(r) * h_t(K)) / c;
+    }
+    u[k + 1][I] = u[k + 1][I - 1];
+    // u[k + 1][I] += u[k][I] * (1 - 2 * gamma() - eps());
+    // u[k + 1][I] += u[k][I - 1] * 2 * gamma();
+    // u[k + 1][I] += (beta * valI(R) * h_t(K)) / c;
+    console.log(u[k + 1]);
+  }
+  for (let k = 0; k < K + 1; k++) {
+    for (let i = 0; i < I + 1; i++) {
+      u[k][i] += u0;
+    }
+  }
+
+  console.log(k_layer);
+
+  for (let i = 0; i < I + 1; i++) {
+    schemaSolutionGraph[i][`${SCHEMA_LABEL}`] = u[k_layer][i];
+  }
+  console.log(schemaSolutionGraph);
+
   return { schemaSolutionGraph, SCHEMA_LABEL };
 };
