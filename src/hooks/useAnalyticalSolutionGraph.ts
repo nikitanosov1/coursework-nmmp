@@ -15,7 +15,7 @@ interface IProps {
 export const useAnalyticalSolutionGraph = ({ I, K, k }: IProps) => {
   const GPAPH_LABEL = "Аналитическое решение";
   const { R, kT, c, alpha, beta, l, h_t, createRAxis } = SchemeUtil;
-  const n = 30; // Кол-во членов ряда Фурье
+  const n = 200; // Кол-во членов ряда Фурье
 
   const Ф = (N: number) => {
     return (60 * beta * R) / (Math.PI * kT * N);
@@ -25,13 +25,13 @@ export const useAnalyticalSolutionGraph = ({ I, K, k }: IProps) => {
     return besselj(x, N);
   };
 
-  const λ = (i: number) => {
+  const λ = (i: number): number => {
     return (-Math.pow(μ[i], 2) * kT) / Math.pow(R, 2) - (2 * alpha) / l;
   };
 
   const B = (i: number) => {
     if (i === 0) {
-      if (R >= 0.2) {
+      if (R > 0.2) {
         return (12 * beta) / Math.pow(R, 2);
       } else {
         return 300 * beta;
@@ -50,21 +50,6 @@ export const useAnalyticalSolutionGraph = ({ I, K, k }: IProps) => {
       result +=
         ((B(i) * (Math.pow(Math.E, (lambda * t) / c) - 1)) / lambda) *
         J_n((μ[i] * r) / R, 0);
-    }
-    return result;
-  };
-
-  const factorial = (x: number) => {
-    let result = 1;
-    if (x === 0) {
-      return 1;
-    }
-    if (x < 0) {
-      console.log("Беда факториал");
-      return undefined;
-    }
-    for (let i = 2; i <= x; i++) {
-      result *= i;
     }
     return result;
   };

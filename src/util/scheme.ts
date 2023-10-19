@@ -13,7 +13,7 @@ export class SchemeUtil {
    * @returns Значение функции I(r), то есть интенсивности излучения
    */
   static valI = (r: number) => {
-    if (0 <= r && r < 0.2) {
+    if (0 <= r && r <= 0.2) {
       return 300;
     } else {
       return 0;
