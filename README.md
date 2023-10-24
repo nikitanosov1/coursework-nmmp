@@ -9,6 +9,12 @@
 
 Также отображается время вычислений разностной схемы и погрешность
 Погрешность определяется как максимальное отклонение анатилического решения от решения схемы
-![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/ad50511f-b77b-4ed8-b865-e512ad023d4e)
-![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/8c6b07a1-56f5-4a46-b8fa-cdaeac448b62)
-![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/8fe41cc7-ae05-41f8-966c-ba55462318b0)
+
+Пример явной схемы
+![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/772f3c0d-6f67-45aa-a1e9-3caf0b48120d)
+Пример неявной схемы
+![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/a84dbc8d-bd4a-48b5-adad-e7a77d0cb5b7)
+Пример схемы Кранка-Николсона
+![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/89cbd3d3-1fda-40b8-b7f4-55fd157b314d)
+Пример валидации формы
+![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/317e972e-8677-4d81-b7f2-1387a5e058d2)
