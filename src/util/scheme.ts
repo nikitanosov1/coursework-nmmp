@@ -38,7 +38,7 @@ export class SchemeUtil {
 
   /**
    * @param I Кол-во дроблений по координате r
-   * @returns Массив r_i
+   * @returns Массив  r_i
    */
   static createRAxis = (I: number) => {
     const r: number[] = [];
