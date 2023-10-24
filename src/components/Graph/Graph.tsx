@@ -141,7 +141,6 @@ export const Graph = () => {
           {/* Line (график) решения с помощью разностной схемы*/}
           <Line
             key={`${SCHEMA_LABEL}`}
-            type="monotone"
             dataKey={`${SCHEMA_LABEL}`}
             stroke="green"
             strokeWidth="3"
