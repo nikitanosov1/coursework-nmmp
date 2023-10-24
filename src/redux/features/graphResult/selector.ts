@@ -5,4 +5,3 @@ export const selectWorkTime = (state: any) =>
 
 export const selectInaccuracy = (state: any) =>
   selectGraphResultsModule(state).inaccuracy;
-const a = 1;
