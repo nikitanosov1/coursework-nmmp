@@ -1,1 +1,14 @@
-# numerical methods of mathematical physics
+# Курсовая работа по ЧММФ (Численные Методы Математической Физики)
+
+Проект доступен по [ссылке](https://nikitanosov1.github.io/coursework-nmmp/)
+
+В данной курсовой работе реализовано отображение аналитического графика, а также графика, полученного с помощью разностной схемы на выбор:
+* Явная схема
+* Неявная схема
+* Схема Кранка-Николсона
+
+Также отображается время вычислений разностной схемы и погрешность
+Погрешность определяется как максимальное отклонение анатилического решения от решения схемы
+![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/ad50511f-b77b-4ed8-b865-e512ad023d4e)
+![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/8c6b07a1-56f5-4a46-b8fa-cdaeac448b62)
+![image](https://github.com/nikitanosov1/coursework-nmmp/assets/71886485/8fe41cc7-ae05-41f8-966c-ba55462318b0)
