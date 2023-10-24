@@ -55,7 +55,11 @@ export const GraphSettings = () => {
     });
   };
 
-  const hasError = formValues.I < 1 || formValues.K < 1 || formValues.k < 0;
+  const hasError =
+    formValues.I < 1 ||
+    formValues.K < 1 ||
+    formValues.k < 0 ||
+    formValues.k > formValues.K;
 
   return (
     <Stack
@@ -98,7 +102,7 @@ export const GraphSettings = () => {
           InputProps={{
             inputProps: { min: 0 },
           }}
-          error={formValues.k < 0}
+          error={formValues.k < 0 || formValues.k > formValues.K}
         />
         <FormLabel>Тип схемы</FormLabel>
         <RadioGroup
