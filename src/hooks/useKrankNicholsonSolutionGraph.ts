@@ -100,6 +100,7 @@ export const useKrankNicholsonSolutionGraph = ({ I, K, k }: IProps) => {
   };
 
   // Алгоритм
+  const startTime = performance.now();
   const rAxis = createRAxis(I);
   const schemaSolutionGraph: any = [...rAxis].map((r) => ({
     r,
@@ -128,5 +129,8 @@ export const useKrankNicholsonSolutionGraph = ({ I, K, k }: IProps) => {
     schemaSolutionGraph[i][`${SCHEMA_LABEL}`] = u[k][i];
   }
 
-  return { schemaSolutionGraph, SCHEMA_LABEL };
+  const endTime = performance.now();
+
+  const workTime = endTime - startTime;
+  return { schemaSolutionGraph, SCHEMA_LABEL, workTime };
 };

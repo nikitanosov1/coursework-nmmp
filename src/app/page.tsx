@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { themeActions } from "@/redux/features/theme";
 import { Graph } from "@/components/Graph/Graph";
 import { GraphSettings } from "@/components/GraphSettings/GraphSettings";
+import { WorkTimeOutput } from "@/components/WorkTimeOutput/WorkTimeOutput";
+import { InaccuracyOutput } from "@/components/InaccuracyOutput/InaccuracyOutput";
 
 export default function App() {
   const isDarkTheme = useSelector(selectIsDarkTheme);
@@ -35,6 +37,10 @@ export default function App() {
           <Graph />
           <Stack pt="6px">
             <GraphSettings />
+            <Stack pt={2} direction="column" gap={1}>
+              <WorkTimeOutput />
+              <InaccuracyOutput />
+            </Stack>
           </Stack>
         </Stack>
       </Stack>

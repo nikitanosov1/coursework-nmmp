@@ -1,6 +1,7 @@
 import { useAnalyticalSolutionGraph } from "@/hooks/useAnalyticalSolutionGraph";
 import { useMergeTwoGraphsByField } from "@/hooks/useMergeTwoGraphsByField";
 import { useSchemaSolutionGraph } from "@/hooks/useSchemaSolutionGraph";
+import { graphResultsActions } from "@/redux/features/graphResult";
 import {
   selectBigK,
   selectI,
@@ -11,7 +12,7 @@ import { selectIsDarkTheme } from "@/redux/features/theme/selector";
 import { Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   CartesianGrid,
@@ -21,10 +22,10 @@ import {
   Tooltip,
   YAxis,
   Legend,
-  ResponsiveContainer,
 } from "recharts";
 
 export const Graph = () => {
+  const dispatch = useDispatch();
   const isDarkTheme = useSelector(selectIsDarkTheme);
   const schemaName = useSelector(selectSchemaName);
   const K = useSelector(selectBigK);
@@ -37,18 +38,39 @@ export const Graph = () => {
 
   const labelsColor = isDarkTheme ? "#FFFFFF" : "#11111";
   const analyticalSolutionGraph = useAnalyticalSolutionGraph({ I, K, k });
-  const { schemaSolutionGraph, SCHEMA_LABEL } = useSchemaSolutionGraph({
-    schemaName,
-    I,
-    K,
-    k,
-  });
+  const { schemaSolutionGraph, SCHEMA_LABEL, workTime } =
+    useSchemaSolutionGraph({
+      schemaName,
+      I,
+      K,
+      k,
+    });
+
+  useEffect(() => {
+    dispatch(graphResultsActions.setworkTime(workTime));
+  }, [schemaName]);
 
   const mergedGraph = useMergeTwoGraphsByField(
     "r",
     analyticalSolutionGraph,
     schemaSolutionGraph
   );
+
+  useEffect(() => {
+    const initialValue = 0;
+    if (!mergedGraph) return;
+
+    const inaccuracy = mergedGraph.reduce((accumulator, currentValue) => {
+      return Math.max(
+        accumulator,
+        Math.abs(
+          currentValue["Аналитическое решение"] -
+            currentValue[`${SCHEMA_LABEL}`]
+        )
+      );
+    }, initialValue);
+    dispatch(graphResultsActions.setInaccuracy(inaccuracy));
+  }, [mergedGraph]);
 
   return (
     <Stack width={1200}>

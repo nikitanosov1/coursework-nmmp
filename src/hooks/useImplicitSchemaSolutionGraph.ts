@@ -86,12 +86,12 @@ export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
     return x;
   };
 
+  const startTime = performance.now();
   const rAxisArray = createRAxis(I);
   const schemaSolutionGraph: any = [...rAxisArray].map((r) => ({
     r,
   }));
 
-  // let t;
   const u: number[][] = new Array(K + 1)
     .fill(0)
     .map(() => new Array(I + 1).fill(0));
@@ -116,8 +116,12 @@ export const useImplicitSchemaSolutionGraph = ({ I, K, k }: IProps) => {
     schemaSolutionGraph[i][`${SCHEMA_LABEL}`] = u[k][i];
   }
 
+  const endTime = performance.now();
+
+  const workTime = endTime - startTime;
   return {
     schemaSolutionGraph,
     SCHEMA_LABEL,
+    workTime,
   };
 };

@@ -28,6 +28,7 @@ export const useExplicitSchemaSolutionGraph = ({
   };
 
   // Алгоритм
+  const startTime = performance.now();
   const rAxisArray = createRAxis(I);
   const schemaSolutionGraph: any = [...rAxisArray].map((r) => ({
     r,
@@ -37,7 +38,6 @@ export const useExplicitSchemaSolutionGraph = ({
     .fill(0)
     .map(() => new Array(I + 1).fill(0));
   u[0] = new Array(I + 1).fill(0);
-
   for (let k = 0; k < K; k++) {
     u[k + 1] = new Array(I + 1).fill(0);
     u[k + 1][0] += u[k][0] * (1 - 4 * gamma() - eps());
@@ -50,9 +50,10 @@ export const useExplicitSchemaSolutionGraph = ({
       u[k + 1][i] += u[k][i - 1] * (gamma() - mu(r));
       u[k + 1][i] += (beta * valI(r) * h_t(K)) / c;
     }
-    u[k + 1][I] += u[k][I] * (1 - 2 * gamma() - eps());
-    u[k + 1][I] += u[k][I - 1] * 2 * gamma();
-    u[k + 1][I] += (beta * valI(R) * h_t(K)) / c;
+    u[k + 1][I] = u[k + 1][I - 1];
+    // u[k + 1][I] += u[k][I] * (1 - 2 * gamma() - eps());
+    // u[k + 1][I] += u[k][I - 1] * 2 * gamma();
+    // u[k + 1][I] += (beta * valI(R) * h_t(K)) / c;
   }
   for (let k = 0; k < K + 1; k++) {
     for (let i = 0; i < I + 1; i++) {
@@ -63,5 +64,8 @@ export const useExplicitSchemaSolutionGraph = ({
   for (let i = 0; i < I + 1; i++) {
     schemaSolutionGraph[i][`${SCHEMA_LABEL}`] = u[k_layer][i];
   }
-  return { schemaSolutionGraph, SCHEMA_LABEL };
+  const endTime = performance.now();
+
+  const workTime = endTime - startTime;
+  return { schemaSolutionGraph, SCHEMA_LABEL, workTime };
 };
