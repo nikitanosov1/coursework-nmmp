@@ -48,7 +48,7 @@ export const Graph = () => {
 
   useEffect(() => {
     dispatch(graphResultsActions.setworkTime(workTime));
-  }, [schemaName]);
+  }, [schemaName, workTime, dispatch]);
 
   const mergedGraph = useMergeTwoGraphsByField(
     "r",
@@ -70,7 +70,7 @@ export const Graph = () => {
       );
     }, initialValue);
     dispatch(graphResultsActions.setInaccuracy(inaccuracy));
-  }, [mergedGraph]);
+  }, [mergedGraph, schemaName, I, K, k, SCHEMA_LABEL, dispatch]);
 
   return (
     <Stack width={1200}>
