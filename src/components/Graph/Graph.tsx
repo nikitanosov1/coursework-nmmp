@@ -1,4 +1,6 @@
 import { useAnalyticalSolutionGraph } from "@/hooks/useAnalyticalSolutionGraph";
+import { useCustomExplicit } from "@/hooks/useCustomExplicit";
+import { useCustomExplicitRunge } from "@/hooks/useCustomExplicitRunge";
 import { useMergeGraphs } from "@/hooks/useMergeGraphs";
 import { useSchemaSolutionGraph } from "@/hooks/useSchemaSolutionGraph";
 import { graphResultsActions } from "@/redux/features/graphResult";
@@ -50,9 +52,35 @@ export const Graph = () => {
     dispatch(graphResultsActions.setworkTime(workTime));
   }, [schemaName, workTime, dispatch]);
 
+  const [explicitCustomSolutionGraph1, SCHEMA_LABEL1, workTime1] =
+    useCustomExplicit({
+      label: "K = 500",
+      I: 16,
+      K: 500,
+      k: 500,
+    });
+
+  const [explicitCustomSolutionGraph2, SCHEMA_LABEL2, workTime2] =
+    useCustomExplicit({
+      label: "K = 1000",
+      I: 16,
+      K: 1000,
+      k: 1000,
+    });
+  const [explicitRungeCustomSolutionGraph, SCHEMA_LABEL3, workTime3] =
+    useCustomExplicitRunge({
+      label: "Рунге K = 1000",
+      I: 16,
+      K: 1000,
+      k: 1000,
+    });
+
   const mergedGraph = useMergeGraphs(
-    [analyticalSolutionGraph,
-    schemaSolutionGraph]
+    "r",
+    analyticalSolutionGraph,
+    explicitCustomSolutionGraph1,
+    explicitCustomSolutionGraph2,
+    explicitRungeCustomSolutionGraph
   );
 
   useEffect(() => {
@@ -81,7 +109,7 @@ export const Graph = () => {
           highlightColor="#444"
         />
       ) : (
-        <LineChart syncId="anyId" width={1200} height={600} data={mergedGraph}>
+        <LineChart syncMethod={'value'} syncId="anyId" width={1200} height={600} data={mergedGraph}>
           <CartesianGrid stroke="#ccc" strokeDasharray="2 2"></CartesianGrid>
           <XAxis
             tick={{ fill: labelsColor }}
@@ -139,9 +167,38 @@ export const Graph = () => {
 
           {/* Line (график) решения с помощью разностной схемы*/}
           <Line
-            key={`${SCHEMA_LABEL}`}
-            dataKey={`${SCHEMA_LABEL}`}
+            key={`${SCHEMA_LABEL1}`}
+            dataKey={`${SCHEMA_LABEL1}`}
+            type = "monotoneX"
             stroke="green"
+            strokeWidth="3"
+            dot={{ fill: "#2e4355", stroke: "#8884d8", strokeWidth: 2, r: 0 }}
+            activeDot={{
+              fill: "#2e4355",
+              stroke: "#8884d8",
+              strokeWidth: 5,
+              r: 2,
+            }}
+          />
+          <Line
+            key={`${SCHEMA_LABEL2}`}
+            dataKey={`${SCHEMA_LABEL2}`}
+            type = "monotoneX"
+            stroke="purple"
+            strokeWidth="3"
+            dot={{ fill: "#2e4355", stroke: "#8884d8", strokeWidth: 2, r: 0 }}
+            activeDot={{
+              fill: "#2e4355",
+              stroke: "#8884d8",
+              strokeWidth: 5,
+              r: 2,
+            }}
+          />
+          <Line
+            key={`${SCHEMA_LABEL3}`}
+            dataKey={`${SCHEMA_LABEL3}`}
+            type = "monotoneX"
+            stroke="brown"
             strokeWidth="3"
             dot={{ fill: "#2e4355", stroke: "#8884d8", strokeWidth: 2, r: 0 }}
             activeDot={{

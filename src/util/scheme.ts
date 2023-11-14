@@ -1,6 +1,6 @@
 export class SchemeUtil {
   static readonly R = 2;
-  static readonly T = 300;
+  static readonly T = 2;
   static readonly kT = 0.065;
   static readonly c = 1.84;
   static readonly alpha = 0.002;

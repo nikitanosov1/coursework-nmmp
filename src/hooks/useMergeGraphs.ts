@@ -1,12 +1,25 @@
-export const useMergeGraphs = (graphs: any[][]) => {
+export const useMergeGraphs = (
+  fieldName: string,
+  firstGraph: any[],
+  secondGraph: any[],
+  thirdGraph: any[],
+  fourthGraph:any[]
+  ) => {
   const mergedGraph = [];
-  const countOfGraphs = graphs.length;
-
-  for (let j = 0; j < countOfGraphs; ++j) {
-    for (let i = 0; i < graphs[j].length; ++i) {
-      mergedGraph.push(graphs[j][i]);
-    }
+  
+  const minLength = Math.min(firstGraph.length, secondGraph.length);
+  
+  for (let i = 0; i < minLength; i++) {
+  const mergedObject = {
+  ...firstGraph[i],
+  ...secondGraph[i],
+  ...thirdGraph[i],
+  ...fourthGraph[i],
+  [fieldName]: firstGraph[i][fieldName],
+  };
+  
+  mergedGraph.push(mergedObject);
   }
-
+  
   return mergedGraph;
-};
+  };
