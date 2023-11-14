@@ -1,5 +1,5 @@
 import { useAnalyticalSolutionGraph } from "@/hooks/useAnalyticalSolutionGraph";
-import { useMergeTwoGraphsByField } from "@/hooks/useMergeTwoGraphsByField";
+import { useMergeGraphs } from "@/hooks/useMergeGraphs";
 import { useSchemaSolutionGraph } from "@/hooks/useSchemaSolutionGraph";
 import { graphResultsActions } from "@/redux/features/graphResult";
 import {
@@ -50,10 +50,9 @@ export const Graph = () => {
     dispatch(graphResultsActions.setworkTime(workTime));
   }, [schemaName, workTime, dispatch]);
 
-  const mergedGraph = useMergeTwoGraphsByField(
-    "r",
-    analyticalSolutionGraph,
-    schemaSolutionGraph
+  const mergedGraph = useMergeGraphs(
+    [analyticalSolutionGraph,
+    schemaSolutionGraph]
   );
 
   useEffect(() => {
