@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 export const InaccuracyOutput = () => {
   const inaccuracy = useSelector(selectInaccuracy);
 
-  const beautifulInaccuracy = inaccuracy.toFixed(4);
+  let beautifulInaccuracy = inaccuracy.toFixed(4);
+  if (isNaN(beautifulInaccuracy)){
+    beautifulInaccuracy = "Схема неустойчива"
+  }
   return (
     <Typography
       sx={(theme) => ({
