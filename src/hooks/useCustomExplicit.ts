@@ -13,17 +13,29 @@ export const useCustomExplicit = ({ label, I, K, k: k_layer }: IProps) => {
   const { R, kT, c, alpha, beta, l, u0, h_t, h_r, valI, createRAxis } =
     SchemeUtil;
 
-  const mu = (r: number) => {
-    return (kT * h_t(K)) / (2 * c * r * h_r(I));
-  };
-
-  const gamma = () => {
-    return (kT * h_t(K)) / (c * Math.pow(h_r(I), 2));
-  };
-
-  const eps = () => {
-    return (2 * alpha * h_t(K)) / (c * l);
-  };
+    const mu = (r: number) => {
+      return (kT * h_t(K)) / ( c * r * h_r(I));
+    };
+  
+    const gamma = () => {
+      return (kT * h_t(K)) / (c * Math.pow(h_r(I), 2));
+    };
+  
+    const eps = () => {
+      return (2 * alpha * h_t(K)) / (c * l);
+    };
+  
+    const mu_2 = (r: number) => {
+      return (kT * h_t(K*2)) / ( c * r * h_r(I));
+    };
+  
+    const gamma_2 = () => {
+      return (kT * h_t(K*2)) / (c * Math.pow(h_r(I), 2));
+    };
+  
+    const eps_2 = () => {
+      return (2 * alpha * h_t(K*2)) / (c * l);
+    };
 
   // Алгоритм
   const startTime = performance.now();
