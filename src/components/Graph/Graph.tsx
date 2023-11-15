@@ -39,7 +39,7 @@ export const Graph = () => {
   }, []);
 
   const labelsColor = isDarkTheme ? "#FFFFFF" : "#11111";
-  const analyticalSolutionGraph = useAnalyticalSolutionGraph({ I, K, k });
+  const analyticalSolutionGraph = useAnalyticalSolutionGraph({ I: 16, K, k });
   const { schemaSolutionGraph, SCHEMA_LABEL, workTime } =
     useSchemaSolutionGraph({
       schemaName,
@@ -55,9 +55,9 @@ export const Graph = () => {
   const [explicitCustomSolutionGraph1, SCHEMA_LABEL1, workTime1] =
     useCustomExplicit({
       label: "K = 500",
-      I: 16,
-      K: 500,
-      k: 500,
+      I: 8,
+      K: 200,
+      k: 200,
     });
 
   const [explicitCustomSolutionGraph2, SCHEMA_LABEL2, workTime2] =
@@ -76,11 +76,11 @@ export const Graph = () => {
     });
 
   const mergedGraph = useMergeGraphs(
-    "r",
+    "r",[
     analyticalSolutionGraph,
     explicitCustomSolutionGraph1,
     explicitCustomSolutionGraph2,
-    explicitRungeCustomSolutionGraph
+    explicitRungeCustomSolutionGraph]
   );
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export const Graph = () => {
           highlightColor="#444"
         />
       ) : (
-        <LineChart syncMethod={'value'} syncId="anyId" width={1200} height={600} data={mergedGraph}>
+        <LineChart syncId="anyId" width={1200} height={600} data={mergedGraph}>
           <CartesianGrid stroke="#ccc" strokeDasharray="2 2"></CartesianGrid>
           <XAxis
             tick={{ fill: labelsColor }}
@@ -151,6 +151,7 @@ export const Graph = () => {
 
           {/* Line (график) аналитического решения */}
           <Line
+          connectNulls
             key="Аналитическое решение"
             type="monotone"
             dataKey="Аналитическое решение"
@@ -167,9 +168,10 @@ export const Graph = () => {
 
           {/* Line (график) решения с помощью разностной схемы*/}
           <Line
+          connectNulls
             key={`${SCHEMA_LABEL1}`}
             dataKey={`${SCHEMA_LABEL1}`}
-            type = "monotoneX"
+            // type = "monotoneX"
             stroke="green"
             strokeWidth="3"
             dot={{ fill: "#2e4355", stroke: "#8884d8", strokeWidth: 2, r: 0 }}
@@ -181,9 +183,10 @@ export const Graph = () => {
             }}
           />
           <Line
+          connectNulls
             key={`${SCHEMA_LABEL2}`}
             dataKey={`${SCHEMA_LABEL2}`}
-            type = "monotoneX"
+            // type = "monotoneX"
             stroke="purple"
             strokeWidth="3"
             dot={{ fill: "#2e4355", stroke: "#8884d8", strokeWidth: 2, r: 0 }}
@@ -195,9 +198,10 @@ export const Graph = () => {
             }}
           />
           <Line
+          connectNulls
             key={`${SCHEMA_LABEL3}`}
             dataKey={`${SCHEMA_LABEL3}`}
-            type = "monotoneX"
+            // type = "monotoneX"
             stroke="brown"
             strokeWidth="3"
             dot={{ fill: "#2e4355", stroke: "#8884d8", strokeWidth: 2, r: 0 }}

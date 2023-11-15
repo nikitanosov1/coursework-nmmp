@@ -1,25 +1,30 @@
 export const useMergeGraphs = (
   fieldName: string,
-  firstGraph: any[],
-  secondGraph: any[],
-  thirdGraph: any[],
-  fourthGraph:any[]
+  graphs: any[][],
   ) => {
-  const mergedGraph = [];
+  const mergedGraph = new Map<string, object>();
   
-  const minLength = Math.min(firstGraph.length, secondGraph.length);
+  // let maxCountsOfPoints = 0;
+  // for (let i = 0; i < graphs.length; i++) {
+  //   maxCountsOfPoints = Math.max(maxCountsOfPoints, graphs[i].length);
+  // }
   
-  for (let i = 0; i < minLength; i++) {
-  const mergedObject = {
-  ...firstGraph[i],
-  ...secondGraph[i],
-  ...thirdGraph[i],
-  ...fourthGraph[i],
-  [fieldName]: firstGraph[i][fieldName],
-  };
-  
-  mergedGraph.push(mergedObject);
+  for (let graph of graphs) {
+    for (let point of graph) {
+      if (mergedGraph.has(point[fieldName])) {
+        const currentInfo = mergedGraph.get(point[fieldName]);
+        const newCurrentInfo = {
+          ...currentInfo,
+          ...point
+        };
+        mergedGraph.set(point[fieldName], newCurrentInfo);
+      } else {
+        mergedGraph.set(point[fieldName], point);
+      }
+    }
   }
-  
-  return mergedGraph;
+  const points = Array.from(mergedGraph.values());
+  const sortedPoints = points.sort((a: any, b: any) => a[fieldName] - b[fieldName]);
+  console.log(sortedPoints)
+  return sortedPoints;
   };
