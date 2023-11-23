@@ -1,6 +1,6 @@
 1:HL["/coursework-nmmp/_next/static/media/c9a5bc6a7c948fb0-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 2:HL["/coursework-nmmp/_next/static/css/193f2caadb43a4be.css","style",{"crossOrigin":""}]
-0:["RerwZG7qZMEBUjw6iseRi",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],"$L3",[[["$","link","0",{"rel":"stylesheet","href":"/coursework-nmmp/_next/static/css/193f2caadb43a4be.css","precedence":"next","crossOrigin":""}]],"$L4"]]]]
+0:["Hbb5mBypVe30WgGOGcb_d",[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],"$L3",[[["$","link","0",{"rel":"stylesheet","href":"/coursework-nmmp/_next/static/css/193f2caadb43a4be.css","precedence":"next","crossOrigin":""}]],"$L4"]]]]
 5:HL["/coursework-nmmp/_next/static/css/799ce1f4942191fc.css","style",{"crossOrigin":""}]
 6:I{"id":40820,"chunks":["713:static/chunks/713-f5ca7faa5ae4b88d.js","185:static/chunks/app/layout-497b0c0f734bccff.js"],"name":"StoreProvider","async":false}
 7:I{"id":81443,"chunks":["272:static/chunks/webpack-a68ec85382d71b5f.js","971:static/chunks/fd9d1056-468acc4f51a93355.js","864:static/chunks/864-621110eef8c8ddaa.js"],"name":"","async":false}
