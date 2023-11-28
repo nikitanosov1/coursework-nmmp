@@ -25,6 +25,5 @@ export const useMergeGraphs = (
   }
   const points = Array.from(mergedGraph.values());
   const sortedPoints = points.sort((a: any, b: any) => a[fieldName] - b[fieldName]);
-  console.log(sortedPoints)
   return sortedPoints;
   };

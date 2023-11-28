@@ -4,6 +4,7 @@ import { useCustomExplicitRunge } from "@/hooks/useCustomExplicitRunge";
 import { useMergeGraphs } from "@/hooks/useMergeGraphs";
 import { useSchemaSolutionGraph } from "@/hooks/useSchemaSolutionGraph";
 import { graphResultsActions } from "@/redux/features/graphResult";
+
 import {
   selectBigK,
   selectI,
@@ -54,23 +55,23 @@ export const Graph = () => {
 
   const [explicitCustomSolutionGraph1, SCHEMA_LABEL1, workTime1] =
     useCustomExplicit({
-      label: "K = 500",
+      label: "I = 8",
       I: 8,
-      K: 200,
-      k: 200,
+      K: 1000,
+      k: 1000,
     });
 
   const [explicitCustomSolutionGraph2, SCHEMA_LABEL2, workTime2] =
     useCustomExplicit({
-      label: "K = 1000",
+      label: "I = 16",
       I: 16,
       K: 1000,
       k: 1000,
     });
   const [explicitRungeCustomSolutionGraph, SCHEMA_LABEL3, workTime3] =
     useCustomExplicitRunge({
-      label: "Рунге K = 1000",
-      I: 16,
+      label: "Рунге I = 8",
+      I: 8,
       K: 1000,
       k: 1000,
     });
